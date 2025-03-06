@@ -55,5 +55,5 @@ img {
 }
 
 .row3 {
-  background-image: url('../public/images/background.jpeg');
+  background-image: url('./images/background.jpeg');
 }
