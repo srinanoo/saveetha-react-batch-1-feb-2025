@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import AboutComp from './components/AboutComp'
 import FooterComp from './components/FooterComp'
@@ -164,47 +164,72 @@ import { Nest1 } from './Function2'
 //   )
 // }
 
+// export default function App() {
+//   const usernameRef = useRef("");
+//   const passwordRef = useRef("");
+
+//   const [username, setUsername] = useState("");
+//   const [password, setPassword] = useState("");
+
+//   const handleImpureComp = () => {
+//     let username = document.getElementById('username').value;
+//     let password = document.getElementById('password').value;
+//     console.log(username, password);
+//   }
+//   const handleHalfImpureComp = () => {
+//     console.log(usernameRef.current.value, passwordRef.current.value);
+//     console.log(document.getElementById("h2").innerHTML)
+//   }
+//   const handleUsername = (e) => {
+//     setUsername(e.target.value);
+//   }
+//   const handlePassword = (e) => {
+//     setPassword(e.target.value);
+//   }
+//   const handlePureComp = () => {
+//     console.log(username, password);
+//   }
+//   return (
+//     <>
+//       <h2 id="h2"><span>Impure</span> Component</h2>
+//       <input type="text" placeholder='Username:' id='username' /><br />
+//       <input type="text" placeholder='Password:' id='password' /><br />
+//       <button onClick={handleImpureComp}>Submit</button>
+
+//       <h2>Half Impure Component</h2>
+//       <input type="text" placeholder='Username:' ref={usernameRef} /><br />
+//       <input type="text" placeholder='Password:' ref={passwordRef} /><br />
+//       <button onClick={handleHalfImpureComp}>Submit</button>
+
+//       <h2>Pure Component</h2>
+//       <input type="text" placeholder='Username:' onChange={handleUsername} /><br />
+//       <input type="text" placeholder='Password:' onChange={handlePassword} /><br />
+//       <button onClick={handlePureComp}>Submit</button>
+//     </>
+//   )
+// }
+
 export default function App() {
-  const usernameRef = useRef("");
-  const passwordRef = useRef("");
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState("Dinesh");
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const counter = () => {
+    // setCount(count+1);
+    setName("new name");
+  }
 
-  const handleImpureComp = () => {
-    let username = document.getElementById('username').value;
-    let password = document.getElementById('password').value;
-    console.log(username, password);
-  }
-  const handleHalfImpureComp = () => {
-    console.log(usernameRef.current.value, passwordRef.current.value);
-    console.log(document.getElementById("h2").innerHTML)
-  }
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
-  }
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  }
-  const handlePureComp = () => {
-    console.log(username, password);
-  }
+  useEffect(() => {
+    console.log("useEffect called...");
+    setCount(count+1);
+  }, [name])
+
+  console.log("render...");
+  
   return (
     <>
-      <h2 id="h2"><span>Impure</span> Component</h2>
-      <input type="text" placeholder='Username:' id='username' /><br />
-      <input type="text" placeholder='Password:' id='password' /><br />
-      <button onClick={handleImpureComp}>Submit</button>
-
-      <h2>Half Impure Component</h2>
-      <input type="text" placeholder='Username:' ref={usernameRef} /><br />
-      <input type="text" placeholder='Password:' ref={passwordRef} /><br />
-      <button onClick={handleHalfImpureComp}>Submit</button>
-
-      <h2>Pure Component</h2>
-      <input type="text" placeholder='Username:' onChange={handleUsername} /><br />
-      <input type="text" placeholder='Password:' onChange={handlePassword} /><br />
-      <button onClick={handlePureComp}>Submit</button>
+      <p>Count: {count}</p>
+      <p>Name: {name}</p>
+      <button onClick={counter}>Click</button>
     </>
   )
 }
