@@ -257,35 +257,72 @@ import { Nest1 } from './Function2'
 //   )
 // }
 
+// export default function App() {
+//   const [fact, setFact] = useState("");
+
+//   async function fetchData() {
+//     let res = await fetch("https://catfact.ninja/fact");
+//     let data = await res.json();
+//     console.log(data);
+//     // if(data.fact !== "") 
+//     setFact(data?.fact);
+//   }
+
+//   useEffect(() => {
+//     // fetch("https://catfact.ninja/fact")
+//     //   .then((res) => {
+//     //     return res.json();
+//     //     // let data = res.json();
+//     //     // console.log(data);
+//     //   })
+//     //   .then(data => {
+//     //     console.log(data);
+//     //     setFact(data.fact)
+//     //   })
+//     fetchData();
+
+//   },[])
+
+//   return (
+//     <>
+//       <h1>Cat Facts</h1>
+//       {fact}
+//     </>
+//   )
+// }
+
 export default function App() {
-  const [fact, setFact] = useState("");
 
-  async function fetchData() {
-    let res = await fetch("https://catfact.ninja/fact");
-    let data = await res.json();
-    console.log(data);
-    setFact(data.fact);
+  const [population, setPopulation] = useState([]);
+  const [pop, setPop] = useState("");
+
+  const handleSearch = () => {
+    fetch("https://datausa.io/api/data?drilldowns=Nation&measures="+pop)
+      .then(res => res.json())
+      .then(results => {
+        console.log(results.data);
+        setPopulation(results?.data);
+      })
   }
-
-  useEffect(() => {
-    // fetch("https://catfact.ninja/fact")
-    //   .then((res) => {
-    //     return res.json();
-    //     // let data = res.json();
-    //     // console.log(data);
-    //   })
-    //   .then(data => {
-    //     console.log(data);
-    //     setFact(data.fact)
-    //   })
-    fetchData();
-
-  },[])
 
   return (
     <>
-      <h1>Cat Facts</h1>
-      {fact}
+      <h1>Population</h1>
+      <input type="text" placeholder='Enter Population' onChange={(e) => setPop(e.target.value)} />
+      <button onClick={handleSearch}>Search Population</button>
+      {
+        population.length >0 
+          ? 
+          population.map((v, i) => {
+            return (
+              <div key={i}>
+                <p>Year: {v["ID Year"]}, Nation: {v.Nation}, Population: {v["Population"]}</p>
+              </div>
+            )
+          })
+          :
+          <p>No Data Found</p>
+      }
     </>
   )
 }
