@@ -209,27 +209,83 @@ import { Nest1 } from './Function2'
 //   )
 // }
 
-export default function App() {
-  const [count, setCount] = useState(0);
-  const [name, setName] = useState("Dinesh");
+// export default function App() {
+//   const [count, setCount] = useState(0);
+//   const [name, setName] = useState("Dinesh");
 
-  const counter = () => {
-    // setCount(count+1);
-    setName("new name");
+//   const counter = () => {
+//     // setCount(count+1);
+//     setName("new name");
+//   }
+
+//   useEffect(() => {
+//     console.log("useEffect called...");
+//     setCount(count+1);
+//   }, [name])
+
+//   console.log("render...");
+  
+//   return (
+//     <>
+//       <p>Count: {count}</p>
+//       <p>Name: {name}</p>
+//       <button onClick={counter}>Click</button>
+//     </>
+//   )
+// }
+
+// export default function App() {
+//   const handleClick = (e) => {
+//     e.preventDefault();
+//     console.log("handleClick...");
+//   }
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     console.log("handleSubmit...");
+//   }
+//   return (
+//     <>
+//       <form method="post" onSubmit={handleSubmit}>
+//         <input type="text" placeholder='Username:' name="username" />
+//         <button>Submit 1</button>
+//       </form>
+
+//       <button>Submit 2</button>
+
+//       {/* <a href="https://google.com" onClick={handleClick}>Click Here</a> */}
+//     </>
+//   )
+// }
+
+export default function App() {
+  const [fact, setFact] = useState("");
+
+  async function fetchData() {
+    let res = await fetch("https://catfact.ninja/fact");
+    let data = await res.json();
+    console.log(data);
+    setFact(data.fact);
   }
 
   useEffect(() => {
-    console.log("useEffect called...");
-    setCount(count+1);
-  }, [name])
+    // fetch("https://catfact.ninja/fact")
+    //   .then((res) => {
+    //     return res.json();
+    //     // let data = res.json();
+    //     // console.log(data);
+    //   })
+    //   .then(data => {
+    //     console.log(data);
+    //     setFact(data.fact)
+    //   })
+    fetchData();
 
-  console.log("render...");
-  
+  },[])
+
   return (
     <>
-      <p>Count: {count}</p>
-      <p>Name: {name}</p>
-      <button onClick={counter}>Click</button>
+      <h1>Cat Facts</h1>
+      {fact}
     </>
   )
 }
